@@ -7,7 +7,7 @@ class Node:
         self.children.extend(nodes)
 
     def has_child(self):
-        if len(self.child) > 0:
+        if len(self.children) > 0:
             return True
         else:
             return False
