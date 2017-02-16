@@ -9,8 +9,9 @@ class ChildSumTree:
     def _build_graph(self,tree):
         """
         Build computation graph
+        traversal in left, right, cur_node
         :param tree: root node of the tree
-        :return:
+        :return: (input_val, output_h)
         """
         list_val = [] # input of computation graph
         list_h = [] # output of computation graph
@@ -37,6 +38,10 @@ class ChildSumTree:
         return list_val, list_h
 
     def _traversal_tree(self, tree):
+        """
+        :param tree: root node
+        :return: list of value of each node, traversal left, right, cur_node
+        """
         list_val = []
         def traversal_recursive(tree):
             if (tree.has_child()):
@@ -52,10 +57,13 @@ class ChildSumTree:
 
     def compute_tree(self, tree):
         """
-        Compute h of every node giving a tree
+        Compute h for whole tree.
+        Traversal left, right, cur_node
+        :param tree: root node
+        :return: a list of h for each node
         """
-        g_list_val, g_list_h = self._build_graph(tree)
-        list_val = self._traversal_tree(tree)
+        g_list_val, g_list_h = self._build_graph(tree) # return theano variable of each node
+        list_val = self._traversal_tree(tree) #
         f = theano.function(g_list_val, g_list_h, allow_input_downcast=True)
         result = f(*list_val)
         return result
